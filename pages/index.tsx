@@ -1,9 +1,14 @@
 import type {NextPage} from 'next'
+import {Suspense} from 'react';
 import Head from 'next/head'
-import {TextInput} from "../components/TextInput";
 import {useAddSentence, useSentences} from "../hooks/recoil/sentences";
 import {SentenceBox} from "../components/Sentence";
 import {DeeplKeyButton} from "../components/DeeplKeyButton";
+import dynamic from "next/dynamic";
+
+const SpeechRecognition = dynamic(() => import('../components/SpeechRecognitionContainer').then(mod => mod.SpeechRecognitionContainer), {
+  ssr: false,
+});
 
 const Home: NextPage = () => {
   const sentences = useSentences();
@@ -17,8 +22,10 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex content-center items-center flex-col flex-grow w-full overflow-y-auto">
-        <div className="flex w-full my-8 flex-none">
-          <TextInput onSubmit={sentence => addSentence(sentence)}/>
+        <div className="flex justify-between w-full my-8 flex-none">
+          <Suspense fallback={null}>
+            <SpeechRecognition/>
+          </Suspense>
           <div className="ml-1">
             <DeeplKeyButton/>
           </div>
