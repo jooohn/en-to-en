@@ -1,14 +1,17 @@
 import {atom, useRecoilValue, useSetRecoilState} from "recoil";
 import {v4} from "uuid";
+import {SpeechLanguage} from "../../components/properties";
 
 export type Sentence = {
   id: string
+  language: SpeechLanguage,
   original: string
 }
 
-export function buildSentence(original: string): Sentence {
+export function buildSentence(language: SpeechLanguage, original: string): Sentence {
   return {
     id: v4(),
+    language,
     original,
   };
 }
@@ -22,7 +25,7 @@ export function useSentences(): Sentence[] {
   return useRecoilValue(sentencesState);
 }
 
-export function useAddSentence(): (original: string) => void {
+export function useAddSentence(): (language: SpeechLanguage, original: string) => void {
   const setSentence = useSetRecoilState(sentencesState);
-  return original => setSentence(sentences => [...sentences, buildSentence(original)]);
+  return (language, original) => setSentence(sentences => [...sentences, buildSentence(language, original)]);
 }

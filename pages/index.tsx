@@ -12,8 +12,6 @@ const SpeechRecognition = dynamic(() => import('../components/SpeechRecognitionC
 
 const Home: NextPage = () => {
   const sentences = useSentences();
-  const addSentence = useAddSentence();
-
   return (
     <div className="flex content-center items-center flex-col flex-1 w-full h-full px-8">
       <Head>

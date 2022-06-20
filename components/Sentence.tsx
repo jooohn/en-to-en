@@ -8,7 +8,7 @@ export const SentenceBox: React.FC<{
   const div = useRef<HTMLDivElement>(null);
   const translate = useTranslate();
 
-  const [translated, setTranslated] = useState<string | undefined>(undefined);
+  const [translated, setTranslated] = useState<string | undefined>(sentence.language === 'EN' ? undefined : sentence.original);
   const [reverseTranslated, setReverseTranslated] = useState<string | undefined>(undefined);
 
   useEffect(() => {
@@ -32,9 +32,11 @@ export const SentenceBox: React.FC<{
   return (
     <div className="flex w-full py-3 border-t-2 first:border-t-0" ref={div}>
       <div className="w-1/2">
-        <p className="text-slate-900">
-          {sentence.original}
-        </p>
+        {sentence.language === 'EN' && (
+          <p className="text-slate-900">
+            {sentence.original}
+          </p>
+        )}
         <p className="text-slate-500">
           {translated || '...'}
         </p>
